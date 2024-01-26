@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>PalWorld 服务端配置生成器</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">幻兽帕鲁服务端配置项生成器</h2>
+        <h6 class="text-center">配置文件位置(win版): PalServer\Pal\Saved\Config\WindowsServer\PalWorldSettings.ini</h3>
+            <form id="configForm">
+            </form>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary" onclick="create()">转换</button>
+                <button type="button" class="btn btn-secondary" onclick="copy()">复制</button>
+            </div>
+            <div id="output"></div>
+            <div>
+                <p>生成的内容替换到PalWorldSettings.ini</p>
+                <p>[/Script/Pal.PalGameWorldSettings]</p>
+                <p>OptionSettings=(#替换到这里#)</p>
+                <p></p>
+                <p>以下为文件内容示例，可直接复制</p>
+            </div>
+            <div class="output-template">[/Script/Pal.PalGameWorldSettings]
+                OptionSettings=(Difficulty=None,DayTimeSpeedRate=1.000000,NightTimeSpeedRate=1.000000,ExpRate=1.000000,PalCaptureRate=1.000000,PalSpawnNumRate=2.000000,PalDamageRateAttack=8.000000,PalDamageRateDefense=0.200000,PlayerDamageRateAttack=1.000000,PlayerDamageRateDefense=0.300000,PlayerStomachDecreaceRate=1.000000,PlayerStaminaDecreaceRate=0.600000,PlayerAutoHPRegeneRate=4.000000,PlayerAutoHpRegeneRateInSleep=4.000000,PalStomachDecreaceRate=1.000000,PalStaminaDecreaceRate=0.300000,PalAutoHPRegeneRate=4.000000,PalAutoHpRegeneRateInSleep=4.000000,BuildObjectDamageRate=1.000000,BuildObjectDeteriorationDamageRate=1.000000,CollectionDropRate=2.000000,CollectionObjectHpRate=1.000000,CollectionObjectRespawnSpeedRate=0.500000,EnemyDropItemRate=2.000000,DeathPenalty=ItemAndEquipment,bEnablePlayerToPlayerDamage=False,bEnableFriendlyFire=False,bEnableInvaderEnemy=True,bActiveUNKO=False,bEnableAimAssistPad=True,bEnableAimAssistKeyboard=False,DropItemMaxNum=3000,DropItemMaxNum_UNKO=100,BaseCampMaxNum=128,BaseCampWorkerMaxNum=20,DropItemAliveMaxHours=0.500000,bAutoResetGuildNoOnlinePlayers=False,AutoResetGuildTimeNoOnlinePlayers=72.000000,GuildPlayerMaxNum=20,PalEggDefaultHatchingTime=1.000000,WorkSpeedRate=1.500000,bIsMultiplay=False,bIsPvP=False,bCanPickupOtherGuildDeathPenaltyDrop=False,bEnableNonLoginPenalty=True,bEnableFastTravel=True,bIsStartLocationSelectByMap=True,bExistPlayerAfterLogout=False,bEnableDefenseOtherGuildPlayer=False,CoopPlayerMaxNum=4,ServerPlayerMaxNum=32,ServerName="Default
+                Palworld
+                Server",ServerDescription="",AdminPassword="",ServerPassword="",PublicPort=8211,PublicIP="",RCONEnabled=False,RCONPort=25575,Region="",bUseAuth=True,BanListURL="https://api.palworldgame.com/api/banlist.txt")
+            </div>
+
+            <div class="parameter-adjustments">
+                <p>上述参数主要作了以下几个调整:</p>
+                <ol>
+                    <li>帕鲁强度为默认的1.6倍，玩家强度为默认的0.3倍，2~4人模式下玩家伤害偏高，调整后更趋向是帕鲁为主的游戏。由于强度参数只能在【0.1~无上限】做调整，如果想在调整强度可以参照下方说明。
+                    </li>
+                    <li>敌人掉落、资源采集调整为2倍，采集重生间隔减半，工作效率提升1.5倍。</li>
+                    <li>帕鲁重生数量2倍，2~4人模式下2倍难度较有挑战性。</li>
+                    <li>生命回复调整为4倍，预设值非常无感，经多次测试后4倍是稍微有感又不太影响战斗期间的数值。</li>
+                    <li>帕鲁耐力调整，让帕鲁们更持久，大世界移动更加便利。</li>
+                </ol>
+            </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const configList = [
+            { "key": "Difficulty", "defaultValue": "None", "desc": "难度" },
+            { "key": "DayTimeSpeedRate", "defaultValue": "1.000000", "desc": "白天时间速率" },
+            { "key": "NightTimeSpeedRate", "defaultValue": "1.000000", "desc": "夜间时间速率" },
+            { "key": "ExpRate", "defaultValue": "1.000000", "desc": "经验值率" },
+            { "key": "PalCaptureRate", "defaultValue": "1.000000", "desc": "Pal捕获率" },
+            { "key": "PalSpawnNumRate", "defaultValue": "1.000000", "desc": "Pal出现率" },
+            { "key": "PalDamageRateAttack", "defaultValue": "1.000000", "desc": "Pal攻击伤害倍率" },
+            { "key": "PalDamageRateDefense", "defaultValue": "1.000000", "desc": "对Pal的防御伤害倍率" },
+            { "key": "PlayerDamageRateAttack", "defaultValue": "1.000000", "desc": "玩家攻击伤害倍率" },
+            { "key": "PlayerDamageRateDefense", "defaultValue": "1.000000", "desc": "对玩家的防御伤害倍率" },
+            { "key": "PlayerStomachDecreaceRate", "defaultValue": "1.000000", "desc": "玩家饥饿消耗率" },
+            { "key": "PlayerStaminaDecreaceRate", "defaultValue": "1.000000", "desc": "玩家耐力消耗率" },
+            { "key": "PlayerAutoHPRegeneRate", "defaultValue": "1.000000", "desc": "玩家自动HP恢复率" },
+            { "key": "PlayerAutoHpRegeneRateInSleep", "defaultValue": "1.000000", "desc": "玩家睡眠HP恢复率" },
+            { "key": "PalStomachDecreaceRate", "defaultValue": "1.000000", "desc": "Pal饥饿消耗率" },
+            { "key": "PalStaminaDecreaceRate", "defaultValue": "1.000000", "desc": "Pal耐力消耗率" },
+            { "key": "PalAutoHPRegeneRate", "defaultValue": "1.000000", "desc": "Pal自动HP恢复率" },
+            { "key": "PalAutoHpRegeneRateInSleep", "defaultValue": "1.000000", "desc": "Pal睡眠HP恢复率(Palbox中)" },
+            { "key": "BuildObjectDamageRate", "defaultValue": "1.000000", "desc": "建筑物伤害倍率" },
+            { "key": "BuildObjectDeteriorationDamageRate", "defaultValue": "1.000000", "desc": "建筑物损耗率" },
+            { "key": "CollectionDropRate", "defaultValue": "1.000000", "desc": "采集物品掉落倍率" },
+            { "key": "CollectionObjectHpRate", "defaultValue": "1.000000", "desc": "可采集对象HP倍率" },
+            { "key": "CollectionObjectRespawnSpeedRate", "defaultValue": "1.000000", "desc": "可采集对象重生间隔" },
+            { "key": "EnemyDropItemRate", "defaultValue": "1.000000", "desc": "敌人掉落物品倍率" },
+            { "key": "DeathPenalty", "defaultValue": "All", "desc": "死亡惩罚(None：无丢失，Item：不带装备的丢失物品，ItemAndEquipment：丢失物品和装备，All：丢失所有物品、装备、伙伴)" },
+            { "key": "bEnablePlayerToPlayerDamage", "defaultValue": "False", "desc": "允许玩家对玩家造成伤害" },
+            { "key": "bEnableFriendlyFire", "defaultValue": "False", "desc": "允许友军伤害" },
+            { "key": "bEnableInvaderEnemy", "defaultValue": "True", "desc": "允许入侵敌人" },
+            { "key": "bActiveUNKO", "defaultValue": "False", "desc": "" },
+            { "key": "bEnableAimAssistPad", "defaultValue": "True", "desc": "启用手柄瞄准辅助" },
+            { "key": "bEnableAimAssistKeyboard", "defaultValue": "False", "desc": "启用键盘瞄准辅助" },
+            { "key": "DropItemMaxNum", "defaultValue": "3000", "desc": "掉落物品最大数量" },
+            { "key": "DropItemMaxNum_UNKO", "defaultValue": "100", "desc": "掉落物品最大数量_UNKO" },
+            { "key": "BaseCampMaxNum", "defaultValue": "128", "desc": "基地最大数量" },
+            { "key": "BaseCampWorkerMaxNum", "defaultValue": "15", "desc": "基地工人最大数量" },
+            { "key": "DropItemAliveMaxHours", "defaultValue": "1.000000", "desc": "掉落物品存活最长时间（小时）" },
+            { "key": "bAutoResetGuildNoOnlinePlayers", "defaultValue": "False", "desc": "自动重置公会无在线玩家" },
+            { "key": "AutoResetGuildTimeNoOnlinePlayers", "defaultValue": "72.000000", "desc": "无在线玩家时自动重置公会时间（小时）" },
+            { "key": "GuildPlayerMaxNum", "defaultValue": "20", "desc": "公会最大玩家数" },
+            { "key": "PalEggDefaultHatchingTime", "defaultValue": "72.000000", "desc": "帕鲁蛋孵化时间(小时)" },
+            { "key": "WorkSpeedRate", "defaultValue": "1.000000", "desc": "工作速度倍率" },
+            { "key": "bIsMultiplay", "defaultValue": "False", "desc": "多人游戏" },
+            { "key": "bIsPvP", "defaultValue": "False", "desc": "PvP模式" },
+            { "key": "bCanPickupOtherGuildDeathPenaltyDrop", "defaultValue": "False", "desc": "可以拾取其他公会死亡惩罚掉落" },
+            { "key": "bEnableNonLoginPenalty", "defaultValue": "True", "desc": "启用非登录惩罚" },
+            { "key": "bEnableFastTravel", "defaultValue": "True", "desc": "启用快速旅行" },
+            { "key": "bIsStartLocationSelectByMap", "defaultValue": "True", "desc": "根据地图选择起始位置" },
+            { "key": "bExistPlayerAfterLogout", "defaultValue": "False", "desc": "登出后玩家仍存在" },
+            { "key": "bEnableDefenseOtherGuildPlayer", "defaultValue": "False", "desc": "启用防御其他公会玩家" },
+            { "key": "CoopPlayerMaxNum", "defaultValue": "4", "desc": "合作玩家最大数量" },
+            { "key": "ServerPlayerMaxNum", "defaultValue": "32", "desc": "服务器最大玩家数" },
+            { "key": "ServerName", "defaultValue": "", "desc": "服务器名称" },
+            { "key": "ServerDescription", "defaultValue": "", "desc": "服务器描述" },
+            { "key": "AdminPassword", "defaultValue": "", "desc": "管理员密码" },
+            { "key": "ServerPassword", "defaultValue": "", "desc": "设置服务器密码" },
+            { "key": "PublicPort", "defaultValue": "8211", "desc": "公共端口号" },
+            { "key": "PublicIP", "defaultValue": "", "desc": "公共IP" },
+            { "key": "RCONEnabled", "defaultValue": "False", "desc": "启用RCON" },
+            { "key": "RCONPort", "defaultValue": "25575", "desc": "RCON端口号" },
+            { "key": "Region", "defaultValue": "", "desc": "区域" },
+            { "key": "bUseAuth", "defaultValue": "True", "desc": "使用身份验证" },
+            { "key": "BanListURL", "defaultValue": "https://api.palworldgame.com/api/banlist.txt", "desc": "封禁名单URL" },
+        ];
+
+        const configDefaultValueMap = configList.reduce((map, item) => {
+            map[item.key] = item.defaultValue;
+            return map;
+        }, {});
+
+        function createFormItems() {
+            const form = document.getElementById("configForm");
+            configList.forEach(item => {
+                const divForm = document.createElement("div");
+                const input = document.createElement("input");
+                const inputDiv = document.createElement("div");
+                const label = document.createElement("label");
+                const desc = document.createElement("div");
+                divForm.className = "form-group row";
+                label.className = "col-sm-4 col-form-label";
+                label.textContent = item.key;
+                desc.className = "col-sm-4";
+                desc.innerHTML = `<span class="form-control-plaintext">${item.desc}</span>`;
+                inputDiv.className = "col-sm-4";
+                input.type = "text";
+                input.className = "form-control";
+                input.name = item.key;
+                input.placeholder = item.defaultValue;
+                inputDiv.appendChild(input);
+
+                divForm.appendChild(label);
+                divForm.appendChild(desc);
+                divForm.appendChild(inputDiv);
+
+                form.appendChild(divForm);
+            });
+        }
+
+        function create() {
+            let formData = new FormData(document.getElementById("configForm"));
+            let configStr = "";
+            for (let pair of formData.entries()) {
+                let key = pair[0];
+                let value = pair[1] || configDefaultValueMap[key];
+                if (value === '') {
+                    value = '""';
+                } else if (value !== "True" && value !== "False" && value !== "All" && value !== "None" && isNaN(value)) {
+                    value = '"' + value + '"';
+                }
+                configStr += key + "=" + value + ",";
+            }
+            configStr = configStr.slice(0, -1);
+            document.getElementById("output").textContent = configStr;
+        }
+
+        function copy() {
+            const outputText = document.getElementById("output").textContent;
+            navigator.clipboard.writeText(outputText).then(() => {
+                alert("内容已复制到剪贴板");
+            }, (err) => {
+                alert("复制失败: ", err);
+            });
+        }
+
+        window.onload = createFormItems;
+    </script>
+    <style>
+        body {
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        #output {
+            margin-top: 20px;
+            white-space: pre-line;
+            word-break: break-all;
+            border: 1px solid #ccc;
+            /* 添加边框样式 */
+            padding: 10px;
+        }
+
+        .output-template {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            white-space: pre-line;
+            word-break: break-all;
+        }
+
+        .parameter-adjustments {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .parameter-adjustments p {
+            margin-bottom: 10px;
+        }
+
+        .parameter-adjustments ol {
+            padding-left: 20px;
+        }
+    </style>
+</body>
+
+</html>
