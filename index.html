@@ -11,6 +11,7 @@
     <div class="container">
         <h2 class="text-center">幻兽帕鲁服务端配置项生成器</h2>
         <h6 class="text-center">配置文件位置(win版): PalServer\Pal\Saved\Config\WindowsServer\PalWorldSettings.ini</h3>
+        <h6 class="text-center">标记为【PVP】的配置暂时无效，可先不用调整</h3>
             <form id="configForm">
             </form>
             <div class="text-center">
@@ -42,6 +43,11 @@
                     <li>帕鲁耐力调整，让帕鲁们更持久，大世界移动更加便利。</li>
                 </ol>
             </div>
+            <div class="text-center mt-5">
+                <hr>
+                <p>&copy; 2024 Antengye.</p>
+                <p>感谢配置经验分享 <a href="https://forum.gamer.com.tw/C.php?bsn=71458&snA=227" target="_blank">【討論】社群伺服器參數難度調整分享</a>.</p>
+            </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -49,68 +55,68 @@
 
     <script>
         const configList = [
-            { "key": "Difficulty", "defaultValue": "None", "desc": "难度" },
-            { "key": "DayTimeSpeedRate", "defaultValue": "1.000000", "desc": "白天时间速率" },
-            { "key": "NightTimeSpeedRate", "defaultValue": "1.000000", "desc": "夜间时间速率" },
-            { "key": "ExpRate", "defaultValue": "1.000000", "desc": "经验值率" },
-            { "key": "PalCaptureRate", "defaultValue": "1.000000", "desc": "Pal捕获率" },
-            { "key": "PalSpawnNumRate", "defaultValue": "1.000000", "desc": "Pal出现率" },
-            { "key": "PalDamageRateAttack", "defaultValue": "1.000000", "desc": "Pal攻击伤害倍率" },
-            { "key": "PalDamageRateDefense", "defaultValue": "1.000000", "desc": "对Pal的防御伤害倍率" },
-            { "key": "PlayerDamageRateAttack", "defaultValue": "1.000000", "desc": "玩家攻击伤害倍率" },
-            { "key": "PlayerDamageRateDefense", "defaultValue": "1.000000", "desc": "对玩家的防御伤害倍率" },
-            { "key": "PlayerStomachDecreaceRate", "defaultValue": "1.000000", "desc": "玩家饥饿消耗率" },
-            { "key": "PlayerStaminaDecreaceRate", "defaultValue": "1.000000", "desc": "玩家耐力消耗率" },
-            { "key": "PlayerAutoHPRegeneRate", "defaultValue": "1.000000", "desc": "玩家自动HP恢复率" },
-            { "key": "PlayerAutoHpRegeneRateInSleep", "defaultValue": "1.000000", "desc": "玩家睡眠HP恢复率" },
-            { "key": "PalStomachDecreaceRate", "defaultValue": "1.000000", "desc": "Pal饥饿消耗率" },
-            { "key": "PalStaminaDecreaceRate", "defaultValue": "1.000000", "desc": "Pal耐力消耗率" },
-            { "key": "PalAutoHPRegeneRate", "defaultValue": "1.000000", "desc": "Pal自动HP恢复率" },
-            { "key": "PalAutoHpRegeneRateInSleep", "defaultValue": "1.000000", "desc": "Pal睡眠HP恢复率(Palbox中)" },
-            { "key": "BuildObjectDamageRate", "defaultValue": "1.000000", "desc": "建筑物伤害倍率" },
-            { "key": "BuildObjectDeteriorationDamageRate", "defaultValue": "1.000000", "desc": "建筑物损耗率" },
-            { "key": "CollectionDropRate", "defaultValue": "1.000000", "desc": "采集物品掉落倍率" },
-            { "key": "CollectionObjectHpRate", "defaultValue": "1.000000", "desc": "可采集对象HP倍率" },
-            { "key": "CollectionObjectRespawnSpeedRate", "defaultValue": "1.000000", "desc": "可采集对象重生间隔" },
-            { "key": "EnemyDropItemRate", "defaultValue": "1.000000", "desc": "敌人掉落物品倍率" },
-            { "key": "DeathPenalty", "defaultValue": "All", "desc": "死亡惩罚(None：无丢失，Item：不带装备的丢失物品，ItemAndEquipment：丢失物品和装备，All：丢失所有物品、装备、伙伴)" },
-            { "key": "bEnablePlayerToPlayerDamage", "defaultValue": "False", "desc": "允许玩家对玩家造成伤害" },
-            { "key": "bEnableFriendlyFire", "defaultValue": "False", "desc": "允许友军伤害" },
-            { "key": "bEnableInvaderEnemy", "defaultValue": "True", "desc": "允许入侵敌人" },
-            { "key": "bActiveUNKO", "defaultValue": "False", "desc": "" },
-            { "key": "bEnableAimAssistPad", "defaultValue": "True", "desc": "启用手柄瞄准辅助" },
-            { "key": "bEnableAimAssistKeyboard", "defaultValue": "False", "desc": "启用键盘瞄准辅助" },
-            { "key": "DropItemMaxNum", "defaultValue": "3000", "desc": "掉落物品最大数量" },
-            { "key": "DropItemMaxNum_UNKO", "defaultValue": "100", "desc": "掉落物品最大数量_UNKO" },
-            { "key": "BaseCampMaxNum", "defaultValue": "128", "desc": "基地最大数量" },
-            { "key": "BaseCampWorkerMaxNum", "defaultValue": "15", "desc": "基地工人最大数量" },
-            { "key": "DropItemAliveMaxHours", "defaultValue": "1.000000", "desc": "掉落物品存活最长时间（小时）" },
-            { "key": "bAutoResetGuildNoOnlinePlayers", "defaultValue": "False", "desc": "自动重置公会无在线玩家" },
-            { "key": "AutoResetGuildTimeNoOnlinePlayers", "defaultValue": "72.000000", "desc": "无在线玩家时自动重置公会时间（小时）" },
-            { "key": "GuildPlayerMaxNum", "defaultValue": "20", "desc": "公会最大玩家数" },
-            { "key": "PalEggDefaultHatchingTime", "defaultValue": "72.000000", "desc": "帕鲁蛋孵化时间(小时)" },
-            { "key": "WorkSpeedRate", "defaultValue": "1.000000", "desc": "工作速度倍率" },
-            { "key": "bIsMultiplay", "defaultValue": "False", "desc": "多人游戏" },
-            { "key": "bIsPvP", "defaultValue": "False", "desc": "PvP模式" },
-            { "key": "bCanPickupOtherGuildDeathPenaltyDrop", "defaultValue": "False", "desc": "可以拾取其他公会死亡惩罚掉落" },
-            { "key": "bEnableNonLoginPenalty", "defaultValue": "True", "desc": "启用非登录惩罚" },
-            { "key": "bEnableFastTravel", "defaultValue": "True", "desc": "启用快速旅行" },
-            { "key": "bIsStartLocationSelectByMap", "defaultValue": "True", "desc": "根据地图选择起始位置" },
-            { "key": "bExistPlayerAfterLogout", "defaultValue": "False", "desc": "登出后玩家仍存在" },
-            { "key": "bEnableDefenseOtherGuildPlayer", "defaultValue": "False", "desc": "启用防御其他公会玩家" },
-            { "key": "CoopPlayerMaxNum", "defaultValue": "4", "desc": "合作玩家最大数量" },
-            { "key": "ServerPlayerMaxNum", "defaultValue": "32", "desc": "服务器最大玩家数" },
-            { "key": "ServerName", "defaultValue": "", "desc": "服务器名称" },
-            { "key": "ServerDescription", "defaultValue": "", "desc": "服务器描述" },
-            { "key": "AdminPassword", "defaultValue": "", "desc": "管理员密码" },
-            { "key": "ServerPassword", "defaultValue": "", "desc": "设置服务器密码" },
-            { "key": "PublicPort", "defaultValue": "8211", "desc": "公共端口号" },
-            { "key": "PublicIP", "defaultValue": "", "desc": "公共IP" },
-            { "key": "RCONEnabled", "defaultValue": "False", "desc": "启用RCON" },
-            { "key": "RCONPort", "defaultValue": "25575", "desc": "RCON端口号" },
-            { "key": "Region", "defaultValue": "", "desc": "区域" },
-            { "key": "bUseAuth", "defaultValue": "True", "desc": "使用身份验证" },
-            { "key": "BanListURL", "defaultValue": "https://api.palworldgame.com/api/banlist.txt", "desc": "封禁名单URL" },
+            { "key": "Difficulty", "defaultValue": "None", "desc": "难度", "detail": "一般不调整"},
+            { "key": "DayTimeSpeedRate", "defaultValue": "1.000000", "desc": "白天时间速率【0.1~5】" , "detail": "日夜流逝的速度，参数预设为1，白天晚上各30分钟。若增加数字则流逝更快，白天或晚上会更短。"},
+            { "key": "NightTimeSpeedRate", "defaultValue": "1.000000", "desc": "夜间时间速率【0.1~5】" , "detail": "日夜流逝的速度，参数预设为1，白天晚上各30分钟。若增加数字则流逝更快，白天或晚上会更短。"},
+            { "key": "ExpRate", "defaultValue": "1.000000", "desc": "经验值率【0.1~无上限】", "detail": ""},
+            { "key": "PalCaptureRate", "defaultValue": "1.000000", "desc": "Pal捕获率【0.5~2】", "detail": "帕鲁捕获机率调整。预设为1，这个参数调整非常敏感请谨慎调整。困难模式为0.8，简单模式为2。" },
+            { "key": "PalSpawnNumRate", "defaultValue": "1.000000", "desc": "Pal出现率【0.5~无上限】", "detail": "帕鲁的重生数量" },
+            { "key": "PalDamageRateAttack", "defaultValue": "1.000000", "desc": "Pal攻击伤害倍率【0.1~无上限】", "detail": "帕鲁造成的伤害倍率，预设为1，数字越高帕鲁越强。包含自己和野生的帕鲁。" },
+            { "key": "PalDamageRateDefense", "defaultValue": "1.000000", "desc": "对Pal的防御伤害倍率【0.1~无上限】", "detail": "帕鲁受到的伤害倍率，预设为1，数字越低帕鲁越硬。包含自己和野生的帕鲁。" },
+            { "key": "PlayerDamageRateAttack", "defaultValue": "1.000000", "desc": "玩家攻击伤害倍率【0.1~无上限】", "detail": "玩家造成的伤害倍率，预设为1，数字越高玩家越强。" },
+            { "key": "PlayerDamageRateDefense", "defaultValue": "1.000000", "desc": "对玩家的防御伤害倍率【0.1~无上限】", "detail": "玩家受到的伤害倍率，预设为1，数字越低玩家越硬。"   },
+            { "key": "PlayerStomachDecreaceRate", "defaultValue": "1.000000", "desc": "玩家饥饿消耗率【0.1~5】", "detail": "饱足感下降速度，预设为1。数字越低下降越慢，越不容易空腹的意思。" },
+            { "key": "PlayerStaminaDecreaceRate", "defaultValue": "1.000000", "desc": "玩家耐力消耗率【0.1~5】", "detail": "耐力条下降速度，预设为1。数字越低下降越慢，耐力越多的意思。" },
+            { "key": "PlayerAutoHPRegeneRate", "defaultValue": "1.000000", "desc": "玩家自动HP恢复率【0.1~无上限】", "detail": "" },
+            { "key": "PlayerAutoHpRegeneRateInSleep", "defaultValue": "1.000000", "desc": "玩家睡眠HP恢复率【0.1~无上限】", "detail": "" },
+            { "key": "PalStomachDecreaceRate", "defaultValue": "1.000000", "desc": "Pal饥饿消耗率【0.1~5】", "detail": "饱足感下降速度，预设为1。数字越低下降越慢，越不容易空腹的意思。" },
+            { "key": "PalStaminaDecreaceRate", "defaultValue": "1.000000", "desc": "Pal耐力消耗率【0.1~5】", "detail": "耐力条下降速度，预设为1。数字越低下降越慢，耐力越多的意思。" },
+            { "key": "PalAutoHPRegeneRate", "defaultValue": "1.000000", "desc": "Pal自动HP恢复率【0.1~无上限】", "detail": "" },
+            { "key": "PalAutoHpRegeneRateInSleep", "defaultValue": "1.000000", "desc": "Pal睡眠HP恢复率(Palbox中)【0.1~无上限】", "detail": "" },
+            { "key": "BuildObjectDamageRate", "defaultValue": "1.000000", "desc": "建筑物伤害倍率【0.5~3】", "detail": "建筑模式中有拆解模式不需要手动慢慢敲" },
+            { "key": "BuildObjectDeteriorationDamageRate", "defaultValue": "1.000000", "desc": "建筑物损耗率【0~10】", "detail": "越高劣化越快" },
+            { "key": "CollectionDropRate", "defaultValue": "1.000000", "desc": "采集物品掉落倍率【0.5~无上限】", "detail": "拿石稿敲小帕鲁矿取得1个帕鲁碎片预设要6下平均19点伤害，若调为3则要敲2下平均19点伤害" },
+            { "key": "CollectionObjectHpRate", "defaultValue": "1.000000", "desc": "可采集对象HP倍率【0.5~3】", "detail": "" },
+            { "key": "CollectionObjectRespawnSpeedRate", "defaultValue": "1.000000", "desc": "可采集对象重生间隔【0.5~3】", "detail": "採集资源重生间格，预设为1(树木大矿石为1小时)，若为0立即重生。" },
+            { "key": "EnemyDropItemRate", "defaultValue": "1.000000", "desc": "敌人掉落物品倍率【0.5~无上限】", "detail": "" },
+            { "key": "DeathPenalty", "defaultValue": "All", "desc": "死亡惩罚【None，Item，ItemAndEquipment， All 】", "detail": "None甚麽都不掉；Item仅掉落道具(不含帕鲁及身上穿的装备武器)；ItemAndEquipment除了帕鲁其他全掉；All帕鲁、装备、道具全部掉落(不包含无法掉落的帕鲁专属装备，如马鞍)。" },
+            { "key": "bEnablePlayerToPlayerDamage", "defaultValue": "False", "desc": "允许玩家对玩家造成伤害", "detail": "【PVP】玩家对玩家伤害" },
+            { "key": "bEnableFriendlyFire", "defaultValue": "False", "desc": "允许友军伤害", "detail": "【PVP】玩家对自己帕鲁跟同公会玩家的伤害" },
+            { "key": "bEnableInvaderEnemy", "defaultValue": "True", "desc": "允许入侵敌人", "detail": "袭击事件（建议开启）" },
+            { "key": "bActiveUNKO", "defaultValue": "False", "desc": "？", "detail": "" },
+            { "key": "bEnableAimAssistPad", "defaultValue": "True", "desc": "启用手柄瞄准辅助", "detail": "" },
+            { "key": "bEnableAimAssistKeyboard", "defaultValue": "False", "desc": "启用键盘瞄准辅助", "detail": "" },
+            { "key": "DropItemMaxNum", "defaultValue": "3000", "desc": "掉落物品最大数量", "detail": "世界内的掉落物上限。" },
+            { "key": "DropItemMaxNum_UNKO", "defaultValue": "100", "desc": "掉落物品最大数量_UNKO", "detail": "(？)上限。" },
+            { "key": "BaseCampMaxNum", "defaultValue": "128", "desc": "基地最大数量", "detail": "" },
+            { "key": "BaseCampWorkerMaxNum", "defaultValue": "15", "desc": "基地工人最大数量", "detail": "数字超过15目前不生效。" },
+            { "key": "DropItemAliveMaxHours", "defaultValue": "1.000000", "desc": "掉落物品存活最长时间（小时）", "detail": "掉落物品的保留时间，预设为1(1小时)，建议设为0.5以保证掉落物不会太多造成卡顿。" },
+            { "key": "bAutoResetGuildNoOnlinePlayers", "defaultValue": "False", "desc": "自动重置公会无在线玩家", "detail": "自动帮玩家退出公会" },
+            { "key": "AutoResetGuildTimeNoOnlinePlayers", "defaultValue": "72.000000", "desc": "无在线玩家时自动重置公会时间（小时）", "detail": "自动帮玩家退出公会的时间，预设为72(72小时)。" },
+            { "key": "GuildPlayerMaxNum", "defaultValue": "20", "desc": "公会最大玩家数", "detail": "" },
+            { "key": "PalEggDefaultHatchingTime", "defaultValue": "72.000000", "desc": "帕鲁蛋孵化时间(小时)", "detail": "" },
+            { "key": "WorkSpeedRate", "defaultValue": "1.000000", "desc": "工作速度倍率", "detail": "" },
+            { "key": "bIsMultiplay", "defaultValue": "False", "desc": "多人游戏", "detail": "【PVP】" },
+            { "key": "bIsPvP", "defaultValue": "False", "desc": "PvP模式", "detail": "【PVP】" },
+            { "key": "bCanPickupOtherGuildDeathPenaltyDrop", "defaultValue": "False", "desc": "可以拾取其他公会死亡惩罚掉落", "detail": "【PVP】" },
+            { "key": "bEnableNonLoginPenalty", "defaultValue": "True", "desc": "启用非登录惩罚", "detail": "【PVP】" },
+            { "key": "bEnableFastTravel", "defaultValue": "True", "desc": "启用快速旅行", "detail": "是否开启快速旅行" },
+            { "key": "bIsStartLocationSelectByMap", "defaultValue": "True", "desc": "根据地图选择起始位置", "detail": "是否创角后选择出生点，预设为开。若为关则出生在初始台地，死亡后依旧可以选择其他出生点。" },
+            { "key": "bExistPlayerAfterLogout", "defaultValue": "False", "desc": "登出后玩家仍存在", "detail": "是否玩家全部登出自动关服" },
+            { "key": "bEnableDefenseOtherGuildPlayer", "defaultValue": "False", "desc": "启用防御其他公会玩家", "detail": "【PVP】是否受到其他公会伤害" },
+            { "key": "CoopPlayerMaxNum", "defaultValue": "4", "desc": "合作玩家最大数量", "detail": "" },
+            { "key": "ServerPlayerMaxNum", "defaultValue": "32", "desc": "服务器最大玩家数", "detail": "" },
+            { "key": "ServerName", "defaultValue": "", "desc": "服务器名称", "detail": "" },
+            { "key": "ServerDescription", "defaultValue": "", "desc": "服务器描述", "detail": "" },
+            { "key": "AdminPassword", "defaultValue": "", "desc": "管理员密码", "detail": "" },
+            { "key": "ServerPassword", "defaultValue": "", "desc": "设置服务器密码", "detail": "" },
+            { "key": "PublicPort", "defaultValue": "8211", "desc": "公共端口号", "detail": "" },
+            { "key": "PublicIP", "defaultValue": "", "desc": "公共IP", "detail": "" },
+            { "key": "RCONEnabled", "defaultValue": "False", "desc": "启用RCON", "detail": "" },
+            { "key": "RCONPort", "defaultValue": "25575", "desc": "RCON端口号", "detail": "" },
+            { "key": "Region", "defaultValue": "", "desc": "区域", "detail": "" },
+            { "key": "bUseAuth", "defaultValue": "True", "desc": "使用身份验证", "detail": "" },
+            { "key": "BanListURL", "defaultValue": "https://api.palworldgame.com/api/banlist.txt", "desc": "封禁名单URL", "detail": "" },
         ];
 
         const configDefaultValueMap = configList.reduce((map, item) => {
@@ -130,14 +136,13 @@
                 label.className = "col-sm-4 col-form-label";
                 label.textContent = item.key;
                 desc.className = "col-sm-4";
-                desc.innerHTML = `<span class="form-control-plaintext">${item.desc}</span>`;
+                desc.innerHTML = `<div class="form-control-plaintext">${item.desc}<span class="form-control-plaintext text-muted">${item.detail}</span></div>`;
                 inputDiv.className = "col-sm-4";
                 input.type = "text";
                 input.className = "form-control";
                 input.name = item.key;
                 input.placeholder = item.defaultValue;
                 inputDiv.appendChild(input);
-
                 divForm.appendChild(label);
                 divForm.appendChild(desc);
                 divForm.appendChild(inputDiv);
